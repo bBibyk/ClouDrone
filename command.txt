@@ -1,0 +1,7 @@
+docker run -d \
+  --name sunshine \
+  --network host \
+  --privileged \
+  -v /dev:/dev \
+  -v sunshine_config:/root/.config/sunshine \
+  sunshine-cloud
