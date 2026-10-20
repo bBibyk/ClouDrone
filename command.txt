@@ -1,4 +1,14 @@
-docker run -d \
+**install docker**
+
+curl -fsSL https://tailscale.com/install.sh | sh
+
+tailscale up
+
+sudo modprobe vhci-hcd
+
+docker build -t sunshine-cloud
+
+docker run \
   --name sunshine \
   --network host \
   --privileged \

@@ -7,7 +7,7 @@ sleep 2
 stalonetray &
 sleep 1
 
-# 3. Forcer la configuration pour le bon utilisateur (lizard)
+# 3. Configuration des dossiers et permissions avant de lancer Steam
 mkdir -p /home/lizard/.config/sunshine
 CONF_FILE="/home/lizard/.config/sunshine/sunshine.conf"
 
@@ -19,8 +19,16 @@ else
     grep -q "upnp = disabled" "$CONF_FILE" || echo "upnp = disabled" >> "$CONF_FILE"
 fi
 
-# Donner les droits d'écriture à l'utilisateur interne de Sunshine
-chown -R lizard:lizard /home/lizard/.config/sunshine
+# Donner les droits d'écriture à l'utilisateur interne sur tout son dossier
+# Ceci est crucial pour que Steam puisse se mettre à jour et écrire ses logs
+chown -R lizard:lizard /home/lizard
 
-# 4. Démarrage de Sunshine
+# 4. Démarrage de Steam en mode Big Picture
+# -gamepadui est le flag moderne pour la nouvelle interface Big Picture (style Steam Deck)
+su lizard -c "steam -gamepadui &"
+
+# Laisser le temps à Steam de faire sa mise à jour initiale ou de démarrer
+sleep 5
+
+# 5. Démarrage de Sunshine
 exec sunshine "$CONF_FILE"
