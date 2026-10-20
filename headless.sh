@@ -1,8 +1,8 @@
 #!/bin/sh
 # Script pour exécuter Sunshine dans un environnement totalement sans interface graphique
-
+apt install labwc
 # Chemin vers l'exécutable Sunshine
-SUNSHINE=~/Downloads/sunshine.AppImage
+SUNSHINE=./sunshine.AppImage
 # Répertoire pour stocker les fichiers temporaires
 TEMP_DIR="$(mktemp -d /tmp/sunshine-headless-XXXX)"
 

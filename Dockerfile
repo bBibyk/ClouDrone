@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     libavahi-common3 \
     libavahi-client3 \
     stalonetray \
+    openbox \
+    x11-xserver-utils \
     && rm -rf /var/lib/apt/lists/*
 
 COPY xorg.conf /etc/X11/xorg.conf
