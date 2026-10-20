@@ -18,6 +18,18 @@ RUN apt-get update && apt-get install -y \
     openbox \
     x11-xserver-utils \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN dpkg --add-architecture i386 && apt-get update
+
+# Install Steam, required fonts, and 32-bit graphics libraries
+RUN apt-get install -y \
+    steam \
+    libgl1:i386 \
+    mesa-vulkan-drivers:i386 \
+    mesa-vulkan-drivers \
+    cabextract \
+    xfonts-terminus \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY xorg.conf /etc/X11/xorg.conf
 COPY entrypoint.sh /entrypoint.sh
