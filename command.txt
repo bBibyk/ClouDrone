@@ -21,6 +21,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 tailscale up
 
+modprobe uinput
+
 docker build -t sunshine-cloud .
 
 docker run \

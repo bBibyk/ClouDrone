@@ -29,5 +29,9 @@ su lizard -c "env DISPLAY=:99 steam -gamepadui &"
 
 sleep 5
 
+if [ -e /dev/uinput ]; then
+    chmod 666 /dev/uinput
+fi
+
 # 5. Démarrage de Sunshine en tant qu'utilisateur lizard (pas root)
 exec su lizard -c "env DISPLAY=:99 sunshine $CONF_FILE"
