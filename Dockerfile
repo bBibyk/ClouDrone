@@ -5,6 +5,7 @@ USER root
 RUN apt-get update && apt-get install -y software-properties-common \
     && add-apt-repository universe -y
 
+# Added pulseaudio for sound capture
 RUN apt-get update && apt-get install -y \
     xserver-xorg-video-dummy \
     xserver-xorg-core \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     stalonetray \
     openbox \
     x11vnc \
+    pulseaudio \
     x11-xserver-utils \
     && rm -rf /var/lib/apt/lists/*
     
