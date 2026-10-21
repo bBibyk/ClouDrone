@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     xserver-xorg-core \
     xserver-xorg-input-libinput \
     xserver-xorg-input-evdev \
+    udev \
     linux-tools-common \
     linux-tools-generic \
     hwdata \

@@ -1,7 +1,10 @@
 sudo modprobe usbip_host
+sudo killall usbipd
 sudo usbipd -D
 usbip list -l
+sudo usbip unbind -b 3-3
 sudo usbip bind -b 3-3
+
 
 
 sudo usbip unbind -b 3-3

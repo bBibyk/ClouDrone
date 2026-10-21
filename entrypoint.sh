@@ -35,7 +35,15 @@ Section "Screen"
 EndSection
 EOF
 
+# 2.5 Start udev daemon so Xorg can detect input devices
+/lib/systemd/systemd-udevd --daemon
+sleep 1
+udevadm trigger # Forces a scan of /dev to populate the hardware database
+
 # 3. Start X11 virtual screen
+rm -f /tmp/.X99-lock
+rm -rf /tmp/.X11-unix/X99
+
 Xorg -noreset +extension GLX +extension RANDR +extension RENDER -logfile /tmp/xorg.log -config /etc/X11/xorg.conf :99 &
 sleep 3 
 xhost +local:

@@ -26,6 +26,9 @@ sudo apt install linux-modules-extra-$(uname -r)
 modprobe uinput
 modprobe vhci-hcd
 
+
+sudo chmod 666 /dev/input/*
+
 docker build -t sunshine-cloud .
 
 docker run \
