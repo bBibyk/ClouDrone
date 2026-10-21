@@ -42,3 +42,4 @@ EXPOSE 5900
 ENV DISPLAY=:99
 
 ENTRYPOINT ["/entrypoint.sh"]
+

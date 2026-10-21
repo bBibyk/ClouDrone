@@ -34,7 +34,10 @@ docker run \
   --network host \
   --privileged \
   --env-file .env \
+  -e NVIDIA_DRIVER_CAPABILITIES=all \
+  -e NVIDIA_VISIBLE_DEVICES=all \
   -v /dev:/dev \
+  -v /usr/lib/linux-tools:/usr/lib/linux-tools:ro \
   sunshine-cloud
   
 docker run \

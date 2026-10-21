@@ -74,16 +74,10 @@ if [ -e /dev/uinput ]; then
     chmod 666 /dev/uinput
 fi
 
-# 10. Attach USBIP Device using aggressive find
+# 10. Attach USBIP Device using host binary
 if [ -n "$USBIP_DEVICE" ]; then
     echo "Attempting to attach USBIP device $USBIP_DEVICE..."
-    RAW_USBIP=$(find /usr/lib/linux-tools -name "usbip" -type f -executable 2>/dev/null | head -n 1)
-    
-    if [ -n "$RAW_USBIP" ]; then
-        $RAW_USBIP attach -r 127.0.0.1 -b "$USBIP_DEVICE" || echo "Warning: Failed to attach USBIP device."
-    else
-        echo "Error: USBIP binary not found in container."
-    fi
+    usbip attach -r 127.0.0.1 -b "$USBIP_DEVICE" || echo "Warning: Failed to attach USBIP device."
 fi
 
 # 11. Start Sunshine
