@@ -22,6 +22,7 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 modprobe uinput
+modprobe vhci-hcd
 
 docker build -t sunshine-cloud .
 
@@ -29,6 +30,6 @@ docker run \
   --name sunshine \
   --network host \
   --privileged \
+  --env-file .env \
   -v /dev:/dev \
-  -v sunshine_config:/root/.config/sunshine \
   sunshine-cloud
