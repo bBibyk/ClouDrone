@@ -5,17 +5,20 @@ USER root
 RUN apt-get update && apt-get install -y software-properties-common \
     && add-apt-repository universe -y
 
+# Replaced openbox/stalonetray with xfce4, x11vnc, and usbip
 RUN apt-get update && apt-get install -y \
     xserver-xorg-video-dummy \
     xserver-xorg-core \
     linux-tools-common \
     linux-tools-virtual \
     hwdata \
+    usbip \
     libxfixes3 \
     libavahi-common3 \
     libavahi-client3 \
-    stalonetray \
-    openbox \
+    xfce4 \
+    xfce4-terminal \
+    x11vnc \
     x11-xserver-utils \
     && rm -rf /var/lib/apt/lists/*
     
@@ -34,6 +37,9 @@ RUN apt-get install -y \
 COPY xorg.conf /etc/X11/xorg.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Expose VNC port for debugging
+EXPOSE 5900
 
 ENV DISPLAY=:99
 
