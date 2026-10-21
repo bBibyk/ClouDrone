@@ -1,7 +1,7 @@
 #!/bin/bash
 export DISPLAY=:99
 
-# Generate the correct Dummy Xorg config (Hybrid setup)
+# Generate Dummy Xorg config
 cat << 'EOF' > /etc/X11/xorg.conf
 Section "Device"
     Identifier  "DummyDevice"
@@ -31,14 +31,15 @@ EOF
 Xorg -noreset +extension GLX +extension RANDR +extension RENDER -logfile /tmp/xorg.log -config /etc/X11/xorg.conf :99 &
 sleep 3 
 
-# Allow local connections
 xhost +local:
 
-# 2. Start the XFCE Desktop Environment
-su lizard -c "env DISPLAY=:99 startxfce4" &
-sleep 3
+# 2. Start Openbox and Stalonetray (No DBUS required)
+su lizard -c "env DISPLAY=:99 openbox-session" &
+sleep 1
+su lizard -c "env DISPLAY=:99 stalonetray" &
+sleep 1
 
-# 3. Start VNC Server for debugging
+# 3. Start VNC Server
 x11vnc -display :99 -nopw -listen 0.0.0.0 -xkb -forever -bg &
 
 # 4. Configure Sunshine settings
@@ -65,9 +66,11 @@ fi
 
 # 7. Attach USBIP Device
 if [ -n "$USBIP_DEVICE" ]; then
-    echo "Attempting to attach USBIP device $USBIP_DEVICE..."
     usbip attach -r 127.0.0.1 -b "$USBIP_DEVICE" || echo "Warning: Failed to attach USBIP device."
 fi
+
+# Grant the lizard user permission to the NVIDIA device nodes for NVENC
+chmod 666 /dev/nvidia* || true
 
 # 8. Start Sunshine
 exec su lizard -c "env DISPLAY=:99 sunshine $CONF_FILE"
