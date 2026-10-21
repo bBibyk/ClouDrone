@@ -5,14 +5,12 @@ USER root
 RUN apt-get update && apt-get install -y software-properties-common \
     && add-apt-repository universe -y
 
-# Replaced openbox/stalonetray with xfce4, x11vnc, and usbip
 RUN apt-get update && apt-get install -y \
     xserver-xorg-video-dummy \
     xserver-xorg-core \
     linux-tools-common \
     linux-tools-virtual \
     hwdata \
-    usbip \
     libxfixes3 \
     libavahi-common3 \
     libavahi-client3 \
