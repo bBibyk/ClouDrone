@@ -2,10 +2,10 @@ FROM lizardbyte/sunshine:latest-ubuntu-26.10
 
 USER root
 
+# Install dbus-x11 required for XFCE to launch
 RUN apt-get update && apt-get install -y software-properties-common \
     && add-apt-repository universe -y
 
-# Added dbus-x11 required for XFCE
 RUN apt-get update && apt-get install -y \
     xserver-xorg-video-dummy \
     xserver-xorg-core \
@@ -32,6 +32,10 @@ RUN apt-get install -y \
     cabextract \
     xfonts-terminus \
     && rm -rf /var/lib/apt/lists/*
+
+# Point Ubuntu to the libraries injected by Docker's NVIDIA runtime
+ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+ENV PATH=/usr/local/nvidia/bin:${PATH}
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
