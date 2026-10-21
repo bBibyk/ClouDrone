@@ -5,12 +5,14 @@ USER root
 RUN apt-get update && apt-get install -y software-properties-common \
     && add-apt-repository universe -y
 
+# Added dbus-x11 required for XFCE
 RUN apt-get update && apt-get install -y \
     xserver-xorg-video-dummy \
     xserver-xorg-core \
     linux-tools-common \
     linux-tools-virtual \
     hwdata \
+    dbus-x11 \
     libxfixes3 \
     libavahi-common3 \
     libavahi-client3 \
@@ -22,7 +24,6 @@ RUN apt-get update && apt-get install -y \
     
 RUN dpkg --add-architecture i386 && apt-get update
 
-# Install Steam, required fonts, and 32-bit graphics libraries
 RUN apt-get install -y \
     steam \
     libgl1:i386 \
@@ -32,13 +33,10 @@ RUN apt-get install -y \
     xfonts-terminus \
     && rm -rf /var/lib/apt/lists/*
 
-COPY xorg.conf /etc/X11/xorg.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose VNC port for debugging
 EXPOSE 5900
-
 ENV DISPLAY=:99
 
 ENTRYPOINT ["/entrypoint.sh"]
